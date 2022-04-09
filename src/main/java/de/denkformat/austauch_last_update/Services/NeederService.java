@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class NeederService  {
+public class NeederService {
 
 
 
@@ -30,13 +30,13 @@ public class NeederService  {
     //find all user by ID
     public Needer findById(Long theId) {
         Optional<Needer> result = neederRepository.findById(theId);
-        Needer theUser = null;
+        Needer needer = null;
         if (result.isPresent()) {
-            theUser = result.get();
+            needer = result.get();
         } else {
             throw new RuntimeException("didnt found" + theId);
         }
-        return theUser;
+        return needer;
 
     }
 }

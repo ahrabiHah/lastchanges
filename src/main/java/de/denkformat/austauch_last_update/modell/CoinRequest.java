@@ -20,10 +20,14 @@ public class CoinRequest {
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private  Person person;
 
+    public Person getPerson() {
+        return person;
+    }
 
-    public CoinRequest(int id, double amount) {
+    public CoinRequest(int id, double amount, Person person) {
         this.id = id;
         this.amount = amount;
+        this.person=person;
     }
 
     public CoinRequest() {
