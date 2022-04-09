@@ -23,20 +23,22 @@ public class CoinTransactions {
     private  Timestamp transactionDate;
 
 
+
     @ManyToOne
     @JoinColumn(name = "coin_requestes_id", referencedColumnName = "id")
-    private  CoinRequest request;
+    private  CoinRequest coinRequest;
 
-    @ManyToOne
-    @JoinColumn(name = "payment_methodes_id", referencedColumnName = "id")
+    @OneToOne(targetEntity = PaymentMethod.class,cascade = CascadeType.DETACH)
+    @JoinColumn(name = "paymentMethod_id")
     private  PaymentMethod paymentMethod;
 
-    public CoinTransactions(long id, double price, double totalAmount, Timestamp transactionDate, CoinRequest request, PaymentMethod paymentMethod) {
+    public CoinTransactions(long id, double price, double totalAmount, Timestamp transactionDate,
+                            CoinRequest coinRequest, PaymentMethod paymentMethod) {
         this.id = id;
         this.price = price;
         this.totalAmount = totalAmount;
         this.transactionDate = transactionDate;
-        this.request = request;
+        this.coinRequest = coinRequest;
         this.paymentMethod = paymentMethod;
     }
 
@@ -77,11 +79,11 @@ public class CoinTransactions {
     }
 
     public CoinRequest getRequest() {
-        return request;
+        return coinRequest;
     }
 
     public void setRequest(CoinRequest request) {
-        this.request = request;
+        this.coinRequest = request;
     }
 
     public PaymentMethod getPaymentMethod() {
