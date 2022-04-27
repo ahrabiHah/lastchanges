@@ -1,10 +1,11 @@
 package de.denkformat.austauch_last_update.Services;
 
 import de.denkformat.austauch_last_update.modell.Person;
+import de.denkformat.austauch_last_update.modell.Roles;
 import de.denkformat.austauch_last_update.repository.PersonRepository;
-import java.time.Period;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,13 +47,15 @@ public class PersonService {
 
     //save user in DB
     public void save(Person person){
-        person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
         personRepository.save(person);
     }
     //update Person in DB
     public Person updatePerson(Person person){
         return  personRepository.save(person);
     }
-
+    public  Person findByEmail(String  email){
+        Person result= personRepository.findByEmail(email);
+        return  result;
+    }
 
 }

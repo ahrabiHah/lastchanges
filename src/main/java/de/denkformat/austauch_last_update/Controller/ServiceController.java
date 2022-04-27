@@ -36,12 +36,12 @@ public class ServiceController {
     }
 
 
-    @GetMapping("/api/services/{name}")
+    @GetMapping("/api/service/{name}")
     public Services getServiceName(@PathVariable(value = "name") String name) {
         return servicesService.findByName(name);
     }
 
-    @RequestMapping(value = "/api/service/addUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/service/addNew", method = RequestMethod.POST)
     @ResponseBody
     public Services createService(@RequestBody Services services) {
         return servicesService.save(services);

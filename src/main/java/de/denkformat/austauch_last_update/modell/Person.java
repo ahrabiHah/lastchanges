@@ -49,11 +49,13 @@ public class Person {
     @Column(name = "profile_picture")
     private Blob image;
 
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "Person_Role",joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns=@JoinColumn(name = "Role"))
+    private Set<Roles> roles;
 
-
-    public Person(int id, String firstName, String last_name, String phone, String email,
-                  String country, String city, String password, boolean isActive,
-                  Date dateJoined, Blob image) {
+    public Person(long id, String firstName, String last_name, String phone, String email, String country, String city, String password,
+                  boolean isActive, Date dateJoined, Blob image, Set<Roles> roles) {
         this.id = id;
         this.firstName = firstName;
         this.last_name = last_name;
@@ -65,7 +67,19 @@ public class Person {
         this.isActive = isActive;
         this.dateJoined = dateJoined;
         this.image = image;
+        this.roles = roles;
     }
+
+
+    public Set<Roles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Roles> roles) {
+        this.roles = roles;
+    }
+
+
 
 
 
