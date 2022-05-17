@@ -4,10 +4,10 @@ package de.denkformat.austauch_last_update.Controller;
 import de.denkformat.austauch_last_update.Services.NeederService;
 import de.denkformat.austauch_last_update.Services.PersonService;
 import de.denkformat.austauch_last_update.Services.RoleService;
-import de.denkformat.austauch_last_update.Services.TransactionService;
 import de.denkformat.austauch_last_update.modell.Needer;
 import de.denkformat.austauch_last_update.modell.Person;
 import de.denkformat.austauch_last_update.modell.Roles;
+import de.denkformat.austauch_last_update.modell.dto.PersonDto;
 import de.denkformat.austauch_last_update.repository.PersonRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PersonController {
 	private RoleService roleService;
 
 
-	@Autowired
+
 	public PersonController(PersonService personService, NeederService neederService, RoleService roleService) {
 		this.personService = personService;
 		this.neederService=neederService;
@@ -46,7 +46,7 @@ public class PersonController {
 
 
 	@GetMapping("/api/persons")
-	public List<Person> findAll(){
+	public List<PersonDto> findAll(){
 		return  personService.findAll();
 	}
 

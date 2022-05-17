@@ -3,13 +3,13 @@ package de.denkformat.austauch_last_update.modell;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.sql.Blob;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
+import javax.management.relation.Role;
 import javax.persistence.*;
 
 
 @Entity
-@Table(name = "person",uniqueConstraints = {@UniqueConstraint(columnNames = "first_name"),@UniqueConstraint(columnNames = "email")})
+@Table(name = "person")
 public class Person {
 
     @Id
@@ -24,11 +24,6 @@ public class Person {
     @Column(name = "last_name")
     private String last_name;
 
-    @Column(name = "phone")
-    private String phone;
-
-    @Column(name = "email")
-    private String email;
 
     @Column(name = "country")
     private String country;
@@ -49,22 +44,45 @@ public class Person {
     @Column(name = "profile_picture")
     private Blob image;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    private Contact contact;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "person_Role",joinColumns = @JoinColumn(name = "Person_id"),
+            inverseJoinColumns=@JoinColumn(name = "Role_id"))
+    private Set<Roles> roles;
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+    public Set<Roles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Roles> roles) {
+        this.roles = roles;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
 
 
-    public Person(int id, String firstName, String last_name, String phone, String email,
+    public Person(int id, String firstName, String last_name,
                   String country, String city, String password, boolean isActive,
-                  Date dateJoined, Blob image) {
+                  Date dateJoined, Blob image,Set<Roles> roles) {
         this.id = id;
         this.firstName = firstName;
         this.last_name = last_name;
-        this.phone = phone;
-        this.email = email;
         this.country = country;
         this.city = city;
         this.password = password;
         this.isActive = isActive;
         this.dateJoined = dateJoined;
         this.image = image;
+        this.roles=roles;
     }
 
 
@@ -97,21 +115,7 @@ public class Person {
         this.last_name = last_name;
     }
 
-    public String getPhone() {
-        return phone;
-    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getCountry() {
         return country;

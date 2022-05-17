@@ -15,6 +15,12 @@ public class PaymentMethod {
     @Column(name = "name")
     private  String name;
 
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CoinTransaction_id", referencedColumnName = "id")
+    private  CoinTransactions coinTransactions;
+
     public PaymentMethod(int id, String name) {
         this.id = id;
         this.name = name;
